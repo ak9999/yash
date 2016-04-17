@@ -61,7 +61,6 @@ int main(void)
 		printf("[%s@%s %s] %% ", username, hostname, current_dir);
 		// Get input.
 		if(getchar() == EOF) { should_run = false; }
-		printf("\n");
 		fflush(stdout); // Flush after input.
 
 		/**
