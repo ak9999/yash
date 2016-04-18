@@ -26,6 +26,9 @@
 // Just in case it isn't defined.
 #include <limits.h>
 
+// Utilities
+#include "utils.h"
+
 int main(void)
 {
 	pid_t pid; // stores process id
@@ -58,9 +61,15 @@ int main(void)
 		char * current_dir = getcwd(pathname, sizeof(pathname));
 		/* Print prompt in the format:
 		 * [username@hostname current_working_directory] % */
-		printf("[%s@%s %s] %% ", username, hostname, current_dir);
+		//printf("[%s@%s %s] %% ", username, hostname, current_dir);
+		print_userhost(username, hostname, current_dir);
 		// Get input.
-		if(getchar() == EOF) { should_run = false; }
+		if(getchar() == EOF)
+		{
+			should_run = false;
+			printf("\n");
+		}
+
 		fflush(stdout); // Flush after input.
 
 		/**
