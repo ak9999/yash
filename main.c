@@ -60,8 +60,8 @@ int main(void)
 		char * username = p->pw_name;
 		char * current_dir = getcwd(pathname, sizeof(pathname));
 		/* Print prompt in the format:
-		 * [username@hostname current_working_directory] % */
-		//printf("[%s@%s %s] %% ", username, hostname, current_dir);
+		 * [username@hostname current_working_directory] %
+		 */
 		print_userhost(username, hostname, current_dir);
 		// Get input.
 		if(getchar() == EOF)

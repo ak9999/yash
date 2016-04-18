@@ -20,6 +20,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
 
 void print_red(char*);
 void print_green(char*);

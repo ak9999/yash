@@ -4,6 +4,8 @@
 
 #include "utils.h"
 
+
+// The print_color functions print text in their respective colors.
 void print_red(char * string)
 {
     printf(ANSI_COLOR_RED "%s" ANSI_COLOR_RESET, string);
@@ -34,6 +36,7 @@ void print_cyan(char * string)
     printf(ANSI_COLOR_CYAN "%s" ANSI_COLOR_RESET, string);
 }
 
+// Prints user@host prompt.
 void print_userhost(char * username, char * hostname, char * current_dir)
 {
     printf(ANSI_COLOR_CYAN "[" ANSI_COLOR_RESET);
