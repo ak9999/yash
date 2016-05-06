@@ -32,4 +32,5 @@ void print_cyan(char*);
 
 void print_userhost(char*, char*, char*);
 
+#include "utils.c"
 #endif //YASH_UTILS_H
