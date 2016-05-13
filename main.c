@@ -35,6 +35,7 @@
 int main(void)
 {
 	const int MAX_LINE = 256;
+	char *line;
 	char command[MAX_LINE]; // command
 	char *cmd; // Parse command with this!
 
@@ -60,7 +61,7 @@ int main(void)
 		print_userhost(username, hostname, current_dir);
 		// Get input.
 		if(!fgets(command, MAX_LINE, stdin)) { break; }
-		//system(command);
+		line = strdup(command);
 
 		//Parse and execute
 		if((cmd = strtok(command, DELIMINATORS)))
@@ -76,16 +77,10 @@ int main(void)
 			{
 				break;
 			}
-			else { system(command); }
+			else { system(line); }
 		}
 		fflush(stdout); // Flush after input.
 
-		/**
-		* After reading user input, the steps are:
-		* (1) fork a child process using fork()
-		* (2) the child process will invoke execvp()
-		* (3) if command included &, parent will invoke wait()
-		*/
 	}
 	printf("\n");
 	exit(EXIT_SUCCESS);
