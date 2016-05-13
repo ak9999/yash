@@ -29,21 +29,16 @@
 // Utilities
 #include "utils.h"
 
+// Define deliminators.
+#define DELIMINATORS " \t\r\n"
+
 int main(void)
 {
-	pid_t pid; // stores process id
+	const int MAX_LINE = 256;
+	char command[MAX_LINE]; // command
+	char *cmd; // Parse command with this!
 
-	/*if((pid = fork()) == -1) // System functions set errno.
-	{
-		perror("Process is a fork.");
-		exit(EXIT_FAILURE);
-	}*/
-
-	const int MAX_LINE = 80;
-	char * args[MAX_LINE/2 + 1]; // command line args
-	bool should_run = true; // flag to determine when to exit program
-
-	while(should_run)
+	while(1)
 	{
 		char hostname[HOST_NAME_MAX + 1];
 		char pathname[PATH_MAX + 1];
@@ -64,12 +59,25 @@ int main(void)
 		 */
 		print_userhost(username, hostname, current_dir);
 		// Get input.
-		if(getchar() == EOF)
-		{
-			should_run = false;
-			printf("\n");
-		}
+		if(!fgets(command, MAX_LINE, stdin)) { break; }
+		//system(command);
 
+		//Parse and execute
+		if((cmd = strtok(command, DELIMINATORS)))
+		{
+			// 'cd' is a shell built-in.
+			if(strcmp(cmd, "cd") == 0)
+			{
+				char *arg = strtok(0, DELIMINATORS);
+				if(arg) { chdir(arg); }
+			}
+			// "exit" is also a built-in
+			else if(strcmp(cmd, "exit") == 0)
+			{
+				break;
+			}
+			else { system(command); }
+		}
 		fflush(stdout); // Flush after input.
 
 		/**
@@ -79,5 +87,6 @@ int main(void)
 		* (3) if command included &, parent will invoke wait()
 		*/
 	}
+	printf("\n");
 	exit(EXIT_SUCCESS);
 }
