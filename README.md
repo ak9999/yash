@@ -1,12 +1,14 @@
 # yash
 
-yash is a simple alternative shell.
+yash is a simple shell implementation.
 
 # Tasks
-1. [ ] Execute commands and show output.
+1. [x] Execute commands and show output.
 2. [x] Add pretty colors to prompt.
-3. [ ] Job control?
+3. [ ] Tab-completion and other nice things.
 
 # Building
-TBD
+Run `make`.
 
+# Run
+Run `yash`.
