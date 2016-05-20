@@ -3,7 +3,7 @@
 # Compiler and compiler flags
 
 CC = cc
-CFLAGS = -Wall -pedantic
+CFLAGS = -Wall -pedantic -std=c11
 
 all:
 	make yash
