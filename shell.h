@@ -7,9 +7,10 @@
  * Info on colors found here:
  * https://stackoverflow.com/questions/3219393/stdlib-and-colored-output-in-c
  */
-#ifndef YASH_UTILS_H
-#define YASH_UTILS_H
+#ifndef SHELL_H
+#define SHELL_H
 
+// Define colors
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_YELLOW  "\x1b[33m"
@@ -18,10 +19,21 @@
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
+// Define deliminators.
+#define TOKEN_DELIMS " \t\r\n\a"
+// Define token's buffer size.
+#define TOKEN_BUFSIZE 64
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
+#include <limits.h>
+
+// UNIX includes
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <pwd.h>
 
 void print_red(char*);
 void print_green(char*);
@@ -30,7 +42,20 @@ void print_blue(char*);
 void print_magenta(char*);
 void print_cyan(char*);
 
+void sigcatch();
+
 void print_userhost(char*, char*, char*);
 
-#include "utils.c"
-#endif //YASH_UTILS_H
+// Shell main loop functions.
+void sh_loop(void);
+char * sh_get_cmd(void);
+char ** sh_tokenize_cmd(char*);
+int sh_launch(char**);
+int sh_execute(char**);
+
+// Shell builtins.
+int sh_cd(char**);
+int sh_exit(char**);
+
+#include "shell.c"
+#endif //SHELL_H
