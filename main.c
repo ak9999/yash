@@ -1,10 +1,10 @@
 /*
- * Author: Abdullah Khan
- * Date: 2016-04-16
- * Program: yash - yet another shell
- * Description: An alternative shell.
- * Build instructions: TBA
- */
+* Author: Abdullah Khan
+* Date: 2016-04-16
+* Program: yash - yet another shell
+* Description: An alternative shell.
+* Build instructions: TBA
+*/
 
 /* If using a compiler that defaults to C99 or later */
 #if __STDC_VERSION__ >= 199901L
@@ -16,18 +16,9 @@
 // Utilities
 #include "shell.h"
 
-void sigcatch()
-{
-    signal(SIGINT, SIG_IGN);
-	printf("%s", "\n");
-}
-
 int main(void)
 {
-	struct sigaction handler;
-    handler.sa_handler = sigcatch;
-    sigaction(SIGINT, &handler, NULL);
-
+	signal(SIGINT, SIG_IGN); // Ignore Ctrl-C.
 	sh_loop();
 
 	return EXIT_SUCCESS;
