@@ -74,6 +74,8 @@ void sh_loop(void)
 		/* Print prompt in the format:
 		 * [username@hostname current_working_directory] %
 		 */
+        // If the current working directory is the user's home directory
+        // we should just print ~ to let them know they are home.
         if(strcmp(current_dir, p->pw_dir) == 0)
         {
             print_userhost(username, hostname, "~");
@@ -98,7 +100,7 @@ amount for me.
 char * sh_get_cmd(void)
 {
     char * line = NULL;
-    ssize_t bufsize = 0; // getline will change this.
+    size_t bufsize = 0; // getline will change this.
     // Get the line from user input.
     getline(&line, &bufsize, stdin);
     return line;
@@ -149,16 +151,10 @@ int sh_launch(char ** args)
     pid_t pid, wpid;
     int status;
 
-    if(strcmp(args[0], "cd") == 0)
-    {
-        if(args[1] == NULL)
-        {
-            struct passwd * p = getpwuid(getuid());
-            chdir(p->pw_dir);
-        }
-        else { chdir(args[1]); }
-        return 1;
-    }
+    // Catch ^C so it doesn't break the program.
+    if(args[0] == NULL) { return 1; }
+
+    // exit shell.
     if(strcmp(args[0], "exit") == 0)
     {
         return 0;
@@ -176,6 +172,16 @@ int sh_launch(char ** args)
     else if (pid < 0) // fork() error
     {
         perror("yash");
+    }
+    else if(strcmp(args[0], "cd") == 0)
+    {
+        if(args[1] == NULL)
+        {
+            struct passwd * p = getpwuid(getuid());
+            chdir(p->pw_dir);
+        }
+        else { chdir(args[1]); }
+        return 1;
     }
     else // Parent process.
     {

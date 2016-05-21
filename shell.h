@@ -10,9 +10,6 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-// Disable warnings
-#pragma GCC diagnostic ignored "-Wpointer-sign"
-
 // Define colors
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
@@ -44,8 +41,6 @@ void print_yellow(char*);
 void print_blue(char*);
 void print_magenta(char*);
 void print_cyan(char*);
-
-void sigcatch();
 
 void print_userhost(char*, char*, char*);
 
