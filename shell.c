@@ -4,16 +4,6 @@
 
 #include "shell.h"
 
-// List of builtin commands
-char * builtins[] = { "cd", "exit" };
-// Call builtin function.
-int (*builtin_function[]) (char**) = { &sh_cd, &sh_exit };
-// Return number of builtins
-int num_builtins()
-{
-    return sizeof(builtins) / sizeof(char *);
-}
-
 // The print_color functions print text in their respective colors.
 void print_red(char * string)
 {
@@ -156,6 +146,16 @@ int sh_launch(char ** args)
     pid_t pid, wpid;
     int status;
 
+    if(strcmp(args[0], "cd") == 0)
+    {
+        chdir(args[1]);
+        return 1;
+    }
+    if(strcmp(args[0], "exit") == 0)
+    {
+        return 0;
+    }
+
     pid = fork();
     if(pid == 0) // Child process.
     {
@@ -167,7 +167,7 @@ int sh_launch(char ** args)
     }
     else if (pid < 0) // fork() error
     {
-        perror("fork()");
+        perror("yash");
     }
     else // Parent process.
     {
@@ -179,41 +179,11 @@ int sh_launch(char ** args)
     return 1;
 }
 
-// Builtins
-int sh_cd(char ** args)
-{
-    // cd without parameters should take you to home_dir.
-    if(args[1] == NULL)
-    {
-        fprintf(stderr, "Expected argument for \"cd\".\n");
-    }
-    else
-    {
-        if(chdir(args[1]) != 0) { perror("cd error"); }
-    }
-    return 1;
-}
-
-int sh_exit(char ** args)
-{
-    return 0;
-}
-
 int sh_execute(char ** args)
 {
-    int idx;
     if(args[0] == NULL) // Empty command.
     {
         return 1;
     }
-
-    for(idx = 0; idx < num_builtins(); idx++)
-    {
-        if(strcmp(args[0], builtins[idx]) == 0)
-        {
-            return (*builtin_function[idx])(args);
-        }
-    }
-
     return sh_launch(args);
 }

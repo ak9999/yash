@@ -10,6 +10,9 @@
 #ifndef SHELL_H
 #define SHELL_H
 
+// Disable warnings
+#pragma GCC diagnostic ignored "-Wpointer-sign"
+
 // Define colors
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
@@ -52,10 +55,6 @@ char * sh_get_cmd(void);
 char ** sh_tokenize_cmd(char*);
 int sh_launch(char**);
 int sh_execute(char**);
-
-// Shell builtins.
-int sh_cd(char**);
-int sh_exit(char**);
 
 #include "shell.c"
 #endif //SHELL_H
