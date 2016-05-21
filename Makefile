@@ -9,7 +9,7 @@ all:
 	make yash
 
 yash:
-	$(CC) main.c -o yash
+	$(CC) main.c -o yash $(CFLAGS)
 
 clean:
 	(rm -f *.o;)
