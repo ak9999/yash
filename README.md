@@ -5,7 +5,8 @@ yash is a simple shell implementation.
 # Tasks
 1. [x] Execute commands and show output.
 2. [x] Add pretty colors to prompt.
-3. [ ] Tab-completion and other nice things.
+3. [ ] Add support for redirection.
+4. [ ] Tab-completion and other nice things.
 
 # Building
 Run `make`.
