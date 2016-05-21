@@ -71,11 +71,14 @@ void sh_loop(void)
 		gethostname(hostname, sizeof(hostname)); // Get the hostname.
 		char * username = p->pw_name;
 		char * current_dir = getcwd(pathname, sizeof(pathname));
-        char * home_dir = p->pw_dir;
 		/* Print prompt in the format:
 		 * [username@hostname current_working_directory] %
 		 */
-		print_userhost(username, hostname, current_dir);
+        if(strcmp(current_dir, p->pw_dir) == 0)
+        {
+            print_userhost(username, hostname, "~");
+        }
+        else { print_userhost(username, hostname, current_dir); }
         line = sh_get_cmd();
         args = sh_tokenize_cmd(line);
         status = sh_launch(args);
@@ -148,7 +151,12 @@ int sh_launch(char ** args)
 
     if(strcmp(args[0], "cd") == 0)
     {
-        chdir(args[1]);
+        if(args[1] == NULL)
+        {
+            struct passwd * p = getpwuid(getuid());
+            chdir(p->pw_dir);
+        }
+        else { chdir(args[1]); }
         return 1;
     }
     if(strcmp(args[0], "exit") == 0)
