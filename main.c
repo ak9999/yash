@@ -19,6 +19,7 @@
 void sigcatch()
 {
     signal(SIGINT, SIG_IGN);
+	printf("%s", "\n");
 }
 
 int main(void)
