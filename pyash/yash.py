@@ -10,22 +10,6 @@ import subprocess, shlex
 
 
 class Shell:
-    colors = {
-        'RED':     '\x1b[31m',
-        'GREEN':   '\x1b[32m',
-        'BLUE':    '\x1b[34m',
-        'YELLOW':  '\x1b[33m',
-        'MAGENTA': '\x1b[35m',
-        'CYAN':    '\x1b[36m',
-        'RESET':   '\x1b[0m',
-    }
-
-    # @classmethod
-    # def colorize(cls, color, string):
-    #     pstring = f"{cls.colors[color]} + {string} + {cls.colors['RESET']}"
-    #     print(pstring, end='')
-
-
     @classmethod
     def print_userhost(cls, username, hostname, current_directory):
         '''Print out the shell prompt.
@@ -34,12 +18,7 @@ class Shell:
         hostname -- hostname of computer
         current_directory -- current working directory
         '''
-        # cls.colorize(cls.colors['CYAN'], '[')
-        # cls.colorize(cls.colors['BLUE'], username + '@' + hostname + ' ')
-        # cls.colorize(cls.colors['GREEN'], current_directory)
-        # cls.colorize(cls.colors['CYAN'], ']')
-        # print(' %% ')
-        print("{0}@{1} {2} %%".format(username, hostname, current_directory), end='')
+        print(f'[{username}@{hostname}:{current_directory}] % ', end='')
     
     @classmethod
     def loop(cls):
